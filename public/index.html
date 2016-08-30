@@ -21,7 +21,7 @@
 
         <div class="container" ng-hide="showCircles">
             <div class="form-group" ng-class="{ 'has-error' : subjectForm.username.$invalid }">
-                <h2 for="username">Kullanıcı Adı</h2>
+                <h2 for="username">Kullanıcı Adı:</h2>
                 <input type="text" name="username" ng-model="newSubject.username" placeholder="Kullanıcı" ng-required="true" ng-minlength="5"
                     class="form-control" />
                 <span class="label label-danger" ng-show="subjectForm.username.$error.minlength">Kullanıcı en az 5 harften oluşmalıdır..</span>
