@@ -1,3 +1,5 @@
 # angular-colorful-circle-poll
 
-Angular-Travis-Heroku
+Angular-Travis-Heroku-Protractor-Jasmine-Express-Env2
+
+https://colorful-circle-poll.herokuapp.com/
