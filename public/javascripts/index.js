@@ -1,42 +1,82 @@
-var index = angular.module('index', [])
+var index = angular.module('index', ['ngResource'])
 
-.controller('CircleCtrl', ['$scope', function ($scope) {
-    console.log('Circle Controller');
+    .controller('CircleCtrl', ['$scope', '$http', 'pollService', function ($scope, $http, pollService) {
 
-    $scope.subject = "";
-    $scope.alertMessage = "";
-    $scope.showCircles = false;
-    $scope.subjectList = [];
-       
+        console.log('Circle Controller');
 
-    $scope.sendSubject = function () {
-            $scope.alertMessage = "Teşekkürler, seçiminiz : " + $scope.subject;
-            //$scope.showCircles = true;
-            var itemIndex = $scope.contains($scope.subjectList , $scope.subject);
+        $scope.alertMessage = "";
+        $scope.showCircles = false;
+        $scope.newSubject = { subject: '', username: '' };
+        $scope.subjectType = [
+            { id: '1', name: 'NodeJS' },
+            { id: '2', name: 'Docker' },
+            { id: '3', name: 'Microservices' }
+        ];
 
-            if (itemIndex > -1){
-                $scope.subjectList[itemIndex].count = $scope.subjectList[itemIndex].count + 1;
-                console.log($scope.subjectList);
-            }
-            else{
-                var newSubject = {"name": $scope.subject, "count":1};
-                $scope.subjectList.push(newSubject);
-                console.log($scope.subjectList);
-            }
-            $scope.subject = "";
-    };
+        $scope.getSubjectsByHttpGet = function () {
+            $http.get('/poll', $scope.newSubject)
+                .then(
+                function (response) {
+                    //console.log(response);
+                    $scope.subjectList = response.data;
 
-    $scope.contains = function(a, obj) {
-        console.log("contains");
-        console.log(a);
-        console.log(obj);
-        for (var i = 0; i < a.length; i++) {
-            if (a[i].name === obj) {
-                return i;
-            }
+                },
+                function (response) {
+                    console.log('Subjects could not be listed');
+                }
+                );
+
         }
-        return -1;
-    };
-}])
+        $scope.getSubjectsByHttpGet();
+
+        $scope.sendSubjectByHttpPost = function () {
+
+            $http.post('/poll', $scope.newSubject)
+                .then(
+                function (data) {
+                    console.log(data);
+
+                    console.log($scope.newSubject.subject + ' is saved');
+
+                    $scope.alertMessage = "Teşekkürler, seçiminiz : " + $scope.newSubject.subject;
+                    $scope.newSubject.subject = "";
+
+                    // Get
+                    $scope.getSubjectsByHttpGet();
+
+                },
+                function (data) {
+                    console.log($scope.newSubject.subject + ' couldnot be saved');
+                    $scope.alertMessage = data.message;
+                }
+                );
+
+        };
+
+        $scope.sendSubjectByFactory = function () {
+
+            pollService.save($scope.newSubject, function () {
+                console.log('poll subject is saved');
+
+                $scope.subjectList = pollService.query();
+
+                $scope.alertMessage = "Teşekkürler, seçiminiz : " + $scope.newSubject.subject;
+                $scope.newSubject.subject = "";
+            });
+        };
+
+        $scope.contains = function (arr, obj) {
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i].name === obj) {
+                    return i;
+                }
+            }
+            return -1;
+        };
+    }])
+
+    .factory('pollService', function ($resource) {
+        return $resource('/poll');
+    });
 
 ;
