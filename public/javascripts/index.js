@@ -11,10 +11,12 @@ var index = angular.module('index', [])
 
     $scope.sendSubject = function () {
             $scope.alertMessage = "Teşekkürler, seçiminiz : " + $scope.subject;
-            $scope.showCircles = true;
-            if ( $scope.subjectList.indexOf($scope.subject) > -1 ){
+            //$scope.showCircles = true;
+            var itemIndex = $scope.contains($scope.subjectList , $scope.subject);
+
+            if (itemIndex > -1){
                 console.log('1');
-                $scope.subject[$scope.subjectList.indexOf($scope.subject)].count = $scope.subject[$scope.subjectList.indexOf($scope.subject)].count + 1;
+                $scope.subjectList[itemIndex].count = $scope.subjectList[itemIndex].count + 1;
                 console.log($scope.subjectList);
             }
             else{
@@ -23,7 +25,19 @@ var index = angular.module('index', [])
                 $scope.subjectList.push(newSubject);
                 console.log($scope.subjectList);
             }
-                
+            $scope.subject = "";
+    };
+
+    $scope.contains = function(a, obj) {
+        console.log("contains");
+        console.log(a);
+        console.log(obj);
+        for (var i = 0; i < a.length; i++) {
+            if (a[i].name === obj) {
+                return i;
+            }
+        }
+        return -1;
     };
 }])
 
