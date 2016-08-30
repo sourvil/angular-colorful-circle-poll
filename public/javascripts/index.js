@@ -15,12 +15,10 @@ var index = angular.module('index', [])
             var itemIndex = $scope.contains($scope.subjectList , $scope.subject);
 
             if (itemIndex > -1){
-                console.log('1');
                 $scope.subjectList[itemIndex].count = $scope.subjectList[itemIndex].count + 1;
                 console.log($scope.subjectList);
             }
             else{
-                console.log('2');
                 var newSubject = {"name": $scope.subject, "count":1};
                 $scope.subjectList.push(newSubject);
                 console.log($scope.subjectList);
