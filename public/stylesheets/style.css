@@ -1,0 +1,32 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.circle-xs{
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+}
+
+.circle-sm{
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+}
+
+.circle-md{
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+}
+
+.circle-lg{
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+}
