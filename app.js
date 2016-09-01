@@ -21,7 +21,7 @@ var mongoURI = process.env.mongoURI;
 var MongoDB = mongoose.connect(mongoURI).connection;
 MongoDB.on('error', function (err) { console.log(err.message); });
 MongoDB.once('open', function () {
-    console.log("mongodb connection open");
+    console.log("mongodb connection open OK");
 });
 console.log("PORT:" + process.env.PORT);
 
